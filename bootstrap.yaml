@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/hongyuanlei/argocd-configuration
     targetRevision: HEAD
-    path: infrastructure
+    path: apps
     directory:
       recurse: true
   destination:

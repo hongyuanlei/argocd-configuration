@@ -7,13 +7,13 @@ spec:
   project: default
   source:
     repoURL: https://github.com/hongyuanlei/my-kotlin-app
-    targetRevision: stg
+    targetRevision: dev
     path: k8s
     directory:
       recurse: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: applications-stg
+    namespace: applications
   syncPolicy:
     automated:
       prune: true
