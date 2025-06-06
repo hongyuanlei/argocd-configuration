@@ -4,7 +4,7 @@ metadata:
   name: my-kotlin-app
   namespace: argocd
 spec:
-  project: default
+  project: applications
   source:
     repoURL: https://github.com/hongyuanlei/my-kotlin-app
     targetRevision: dev
