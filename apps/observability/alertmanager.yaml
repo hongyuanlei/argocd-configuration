@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observability-alertmanager
+  namespace: argocd
+spec:
+  project: observability
+  source:
+    repoURL: https://github.com/hongyuanlei/observability-alertmanager
+    targetRevision: master
+    path: k8s
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
