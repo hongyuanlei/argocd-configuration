@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e  # Exit on error
 
+# Start k8s env
 if minikube status | grep -q "host: Running"; then
   echo "Minikube is already running."
 else
@@ -9,16 +10,14 @@ else
 fi
 eval $(minikube docker-env)
 
-
+# Create the necessary namespaces
 kubectl apply -f infrastructure/k8s/namespace.yaml
 
-# Step 1: Apply Argo CD manifests
+# Install ArgoCD
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-# register the argocd-configuration to argocd
-
-# Step 2: Wait for Argo CD components to be ready
 echo "Waiting for Argo CD to become ready..."
 
+# Waiting ArgoCD startup, this step may spend a long time
 kubectl wait deployment/argocd-server \
   --namespace argocd \
   --for=condition=Available \
@@ -29,15 +28,14 @@ kubectl wait deployment/argocd-applicationset-controller \
   --for=condition=Available \
   --timeout=300s
 
-# Step 3: Continue with other commands
 echo "Argo CD is ready. Running follow-up commands..."
 
+# Register argoCD projects
+# Install observability: Prometheus/AlertManager/Grafana/Loki/OTEL/Tempo
+# Install application: my-kotlin-app
 kubectl apply -f infrastructure/argocd/bootstrap.yaml
 
-kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
-
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-
-#用户名：admin
-#
-#初始密码：kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
+# Port forward for argoCD
+kubectl port-forward svc/argocd-server -n argocd 8080:443 &
+echo "argoCD username: admin"
+echo "argoCD password: $(kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d)"
