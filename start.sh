@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -e  # Exit on error
 
+if minikube status | grep -q "host: Running"; then
+  echo "Minikube is already running."
+else
+  echo "Minikube is not running. Starting it now..."
+  minikube start
+fi
+eval $(minikube docker-env)
+
+
 kubectl apply -f infrastructure/k8s/namespace.yaml
 
 # Step 1: Apply Argo CD manifests
