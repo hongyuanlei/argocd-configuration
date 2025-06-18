@@ -9,12 +9,12 @@ echo "Waiting for Argo CD to become ready..."
 kubectl wait deployment/argocd-server \
   --namespace argocd \
   --for=condition=Available \
-  --timeout=300s
+  --timeout=600s
 
 kubectl wait deployment/argocd-applicationset-controller \
   --namespace argocd \
   --for=condition=Available \
-  --timeout=300s
+  --timeout=600s
 
 echo "Argo CD is ready. Running follow-up commands..."
 

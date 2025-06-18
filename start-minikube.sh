@@ -7,7 +7,8 @@ if minikube status | grep -q "host: Running"; then
 else
   echo "Minikube is not running. Starting it now..."
   minikube start \
-   --extra-config=kubelet.serialize-image-pulls=false
+    --cpus=4 \          # Allocate 4 CPU cores
+    --extra-config=kubelet.serialize-image-pulls=false
 fi
 eval $(minikube docker-env)
 

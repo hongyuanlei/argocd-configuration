@@ -7,4 +7,5 @@
 ./install-cert-manager.sh
 ./install-prometheus.sh
 ./install-otel.sh
+./install-loki.sh
 ```
