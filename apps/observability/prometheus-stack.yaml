@@ -4,20 +4,24 @@ metadata:
   name: observability-prometheus-stack
   namespace: argocd
 spec:
-  project: default
+  project: observability
   source:
-    repoURL: https://github.com/prometheus-community/helm-charts
-    targetRevision: main
-    chart: kube-prometheus-stack
+    repoURL: https://github.com/hongyuanlei/observability-promethues
+    targetRevision: master
+    path: prometheus
     helm:
+      chart: kube-prometheus-stack
+      repoURL: https://prometheus-community.github.io/helm-charts
+      version: 58.1.2
       valueFiles:
-#        - https://raw.githubusercontent.com/your-org/observability-prometheus/main/charts/prometheus-stack/values.yaml
+        - dev-values.yaml
+        - common-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: observability
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
+      prune: true
     syncOptions:
       - CreateNamespace=true
