@@ -10,9 +10,6 @@ spec:
     targetRevision: master
     path: prometheus
     helm:
-      chart: kube-prometheus-stack
-      repoURL: https://prometheus-community.github.io/helm-charts
-#      version: 73.2.3
       valueFiles:
         - dev-values.yaml
         - common-values.yaml
