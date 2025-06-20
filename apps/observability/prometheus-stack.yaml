@@ -12,7 +12,7 @@ spec:
     helm:
       chart: kube-prometheus-stack
       repoURL: https://prometheus-community.github.io/helm-charts
-      version: 58.1.2
+      version: 75.3.6
       valueFiles:
         - dev-values.yaml
         - common-values.yaml

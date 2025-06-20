@@ -18,13 +18,10 @@ kubectl wait deployment/argocd-applicationset-controller \
 
 echo "Argo CD is ready. Running follow-up commands..."
 
-
 # Register argoCD projects
-# Install observability: Prometheus/AlertManager/Grafana/Loki/OTEL/Tempo
-# Install application: my-kotlin-app
-#kubectl apply -f infrastructure/argocd/bootstrap.yaml
+kubectl apply -f infrastructure/argocd/bootstrap.yaml
 
 # Port forward for argoCD
-#kubectl port-forward svc/argocd-server -n argocd 8080:443 &
-#echo "argoCD username: admin"
-#echo "argoCD password: $(kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d)"
+kubectl port-forward svc/argocd-server -n argocd 8080:443 &
+echo "argoCD username: admin"
+echo "argoCD password: $(kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d)"
