@@ -12,7 +12,6 @@ spec:
     helm:
       valueFiles:
         - dev-values.yaml
-        - common-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: observability
