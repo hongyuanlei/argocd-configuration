@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opentelemetry-operator
+  namespace: argocd
+spec:
+  project: observability
+  source:
+    repoURL: https://github.com/hongyuanlei/observability-otel
+    targetRevision: master
+    path: otel
+    helm:
+      valueFiles:
+        - dev-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+#      - ServerSideApply=true
